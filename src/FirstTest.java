@@ -4,7 +4,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -45,15 +44,20 @@ public class FirstTest {
 
     @Test
     public void firstTest () {
-        WebElement element_to_init_search = driver.findElementByXPath("//*[contains(@text, 'Search Wikipedia')]");
-        element_to_init_search.click();
 
-        WebElement element_to_enter_search_line = waitForElementPresentByXpath(
-                "//*[contains(@text, 'Search…')]",
-                "Cannot find search input"
+        waitForElementByXpathAndClick(
+                "//*[contains(@text, 'Search Wikipedia')]",
+                "Cannot find Search Wikipedia input",
+                5
         );
 
-        element_to_enter_search_line.sendKeys("Java");
+        waitForElementByXpathAndSendKeys(
+                "//*[contains(@text, 'Search…')]",
+                "Java",
+                "Cannot find search input",
+                5
+        );
+
         waitForElementPresentByXpath(
                 "//*[@resource-id='org.wikipedia:id/page_list_item_container']//*[@text='Object-oriented programming language']",
                 "Cannot find 'Object-oriented programming language' topic searching by 'Java'",
@@ -76,5 +80,19 @@ public class FirstTest {
 
         return waitForElementPresentByXpath(xpath, error_message, 5);
 
+    }
+
+    private WebElement waitForElementByXpathAndClick(String xpath, String error_message, long timeoutInSeconds) {
+
+        WebElement element = waitForElementPresentByXpath(xpath, error_message, timeoutInSeconds);
+        element.click();
+        return element;
+    }
+
+    private WebElement waitForElementByXpathAndSendKeys(String xpath, String value, String error_message, long timeoutInSeconds) {
+
+        WebElement element = waitForElementPresentByXpath(xpath, error_message, timeoutInSeconds);
+        element.sendKeys(value);
+        return element;
     }
 }
