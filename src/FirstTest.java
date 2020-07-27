@@ -1,10 +1,16 @@
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import javax.xml.bind.Element;
 import java.net.URL;
 
 public class FirstTest {
@@ -39,8 +45,45 @@ public class FirstTest {
 
 
     @Test
-    public void firstTest()
-    {
-        System.out.println("First test run");
+    public void testSearchInputPlaceholderText() {
+
+        waitForElementPresent(
+                By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
+                "Cannot find Search Wikipedia input"
+        );
+
+        assertElementHasText(
+                By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
+                "Search Wikipedia",
+                "The input field does not contain the search text"
+        );
+    }
+
+
+
+    private WebElement waitForElementPresent(By by, String errorMessage, long timeoutInSeconds) {
+
+        WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
+        wait.withMessage(errorMessage + "\n");
+        return wait.until(
+                ExpectedConditions.presenceOfElementLocated(by)
+        );
+    }
+
+    private WebElement waitForElementPresent(By by, String errorMessage) {
+
+        return waitForElementPresent(by, errorMessage, 5);
+    }
+
+    private void assertElementHasText(By by, String expectedText, String errorMessage) {
+
+        WebElement element = waitForElementPresent(by, errorMessage);
+        String elementText = element.getAttribute("text");
+        Assert.assertEquals(
+                errorMessage,
+                expectedText,
+                elementText
+        );
     }
 }
+
