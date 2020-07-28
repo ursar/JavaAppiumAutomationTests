@@ -99,6 +99,33 @@ public class FirstTest {
 
     }
 
+    @Test
+    public void testCheckSearchResultContainsRequestedString(){
+
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
+                "Cannot find Search Wikipedia input",
+                5
+        );
+
+        waitForElementAndSendKeys(
+                By.xpath("//*[@resource-id='org.wikipedia:id/search_src_text']"),
+                "JAVA",
+                "There is no search field on the screen",
+                5
+        );
+
+        List<WebElement> searchResults = waitForListOfElementsPresentByXPath(
+                By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_title']"),
+                "There is no search results on the screen",
+                5
+        );
+
+        for (WebElement element : searchResults){
+            Assert.assertTrue("Result does not contains search world", element.getText().toLowerCase().contains("java"));
+        }
+    }
+
 
     private WebElement waitForElementPresent(By by, String errorMessage, long timeoutInSeconds) {
 
