@@ -237,13 +237,18 @@ public class FirstTest {
         );
 
         waitForElementAndClick(
-                By.xpath("//android.widget.ImageView[@content_desc='More options']"),
+                By.xpath("//android.widget.ImageView[@content-desc='More options']"),
                 "Cannot find button to open article options",
                 5
         );
 
+        waitForElementPresent(
+                By.xpath("//*[@resource-id='org.wikipedia:id/title'][@text='Add to reading list']"),
+                "Cannot find option to add article to reading list",
+                5);
+
         waitForElementAndClick(
-                By.xpath("//*[@text='Add to reading list']"),
+                By.xpath("//*[@resource-id='org.wikipedia:id/title'][@text='Add to reading list']"),
                 "Cannot find option to add article to reading list",
                 5
         );
@@ -260,9 +265,11 @@ public class FirstTest {
                 5
         );
 
+
+        String name_of_folder = "Learning programming";
         waitForElementAndSendKeys(
                 By.id("org.wikipedia:id/text_input"),
-                "Learning programming",
+                name_of_folder,
                 "Cannot put text into articles folder",
                 5
         );
@@ -275,7 +282,7 @@ public class FirstTest {
 
 
         waitForElementAndClick(
-                By.xpath("//android.widget.ImageView[@content-desc='Navigate up']"),
+                By.xpath("//android.widget.ImageButton[@content-desc='Navigate up']"),
                 "Cannot close article, cannot find X link",
                 5
         );
@@ -287,7 +294,7 @@ public class FirstTest {
         );
 
         waitForElementAndClick(
-                By.xpath("//*[@text='Java (programming language)']"),
+                By.xpath("//*[@text='" + name_of_folder + "']"),
                 "Cannot find created folder",
                 5
         );
@@ -411,7 +418,7 @@ public class FirstTest {
        TouchAction action = new TouchAction(driver);
        action
                .press(right_x, middle_y)
-               .waitAction(150)
+               .waitAction(300)
                .moveTo(left_x, middle_y)
                .release()
                .perform();
