@@ -35,6 +35,11 @@ public class FirstTest {
 
         driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
 
+//        Ex7*: Поворот экрана
+        if(driver.getOrientation() != ScreenOrientation.PORTRAIT){
+            driver.rotate(ScreenOrientation.PORTRAIT);
+        }
+
     }
 
     @After
