@@ -200,6 +200,27 @@ public class FirstTest {
     }
 
 
+//    Ex6: Тест: assert title
+    @Test
+    public void checkArticleTitleWithoutWaiting(){
+
+        String first_article_title = "Java";
+        String first_article_title_full = "Java (programming language)";
+
+        searchArticle(first_article_title);
+
+        waitForElementAndClick(
+                By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_container']//*[@text='" + first_article_title_full + "']"),
+                "Cannot find article " + first_article_title_full,
+                5
+        );
+
+        assertElementPresent(
+                By.id("org.wikipedia:id/view_page_title_text"),
+                "Cannot find article title");
+    }
+
+
 
     private WebElement waitForElementPresent(By by, String error_message, long timeoutInSeconds) {
 
@@ -283,7 +304,6 @@ public class FirstTest {
             swipeUPQuick();
             ++already_swiped;
         }
-
     }
 
 
@@ -308,7 +328,6 @@ public class FirstTest {
                .moveTo(left_x, middle_y)
                .release()
                .perform();
-
     }
 
     private int getAmountOfElements(By by) {
@@ -326,10 +345,20 @@ public class FirstTest {
         }
     }
 
+
+    private void assertElementPresent(By by, String error_message){
+
+        int amount_of_elements = getAmountOfElements(by);
+        if (amount_of_elements == 0) {
+            String default_message = "An element " + by.toString() + " supposed to be present";
+            throw new AssertionError(default_message + " " + error_message);
+        }
+    }
+
     private String waitForElementAndGetAttribute(By by, String attribute, String error_message, long timeoutInSeconds) {
+
         WebElement element = waitForElementPresent(by, error_message, timeoutInSeconds);
         return element.getAttribute(attribute);
-
     }
 
     private void searchArticle(String search_text) {
@@ -349,10 +378,11 @@ public class FirstTest {
     }
 
     private void searchArticlesAndOpenOne(String search_text, String article_title) {
+
         searchArticle(search_text);
 
         waitForElementAndClick(
-                By.xpath("//*[@resource-id = 'org.wikipedia:id/page_list_item_container']//*[@text = '"+article_title+"']"),
+                By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_container']//*[@text='" + article_title + "']"),
                 "Cannot find article " + article_title,
                 5
         );
