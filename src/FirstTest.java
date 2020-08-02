@@ -443,8 +443,40 @@ public class FirstTest {
     }
 
 
+    @Test
+    public void testCheckSearchArticleInBackground() {
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/search_container"),
+                "Cannot find 'Search Wikipedia input'",
+                5
+        );
 
-        private WebElement waitForElementPresent(By by, String error_message, long timeoutInSeconds) {
+        waitForElementAndSendKeys(
+                By.xpath("//*[contains(@text, 'Search…')]"),
+                "Java",
+                "Cannot find search input",
+                5
+        );
+
+        waitForElementPresent(
+                By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_container']//*[@text='Object-oriented programming language']"),
+                "Cannot find 'Object-oriented programming language' topic searching by 'Java'",
+                15
+        );
+
+        driver.runAppInBackground(2);
+
+        waitForElementPresent(
+                By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_container']//*[@text='Object-oriented programming language']"),
+                "Cannot find article 'Object-oriented programming language' after returning from background",
+                15
+        );
+
+    }
+
+
+
+    private WebElement waitForElementPresent(By by, String error_message, long timeoutInSeconds) {
 
         WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
         wait.withMessage(error_message + "\n");
