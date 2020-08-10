@@ -46,7 +46,7 @@ public class MainPageObject {
 
         WebElement element = waitForElementPresent(by, error_message, timeoutInSeconds);
         element.sendKeys(value);
-//        driver.hideKeyboard();
+        driver.hideKeyboard();
         return element;
     }
 

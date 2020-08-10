@@ -14,13 +14,21 @@ public class ArticlePageObject extends MainPageObject{
             ADD_TO_MY_LIST_OVERLAY = "org.wikipedia:id/onboarding_button",
             MY_LIST_NAME_INPUT = "org.wikipedia:id/text_input",
             MY_LIST_OK_BUTTON = "//*[@text='OK']",
-            CLOSE_ARTICLE_BUTTON = "//android.widget.ImageButton[@content-desc='Navigate up']";
-
+            CLOSE_ARTICLE_BUTTON = "//android.widget.ImageButton[@content-desc='Navigate up']",
+            MY_EXITING_LIST_TPL = "//android.widget.TextView[@text = '{FOLDER_NAME}']";
 
     public ArticlePageObject(AppiumDriver driver) {
 
         super(driver);
     }
+
+    /* TEMPLATES METHODS */
+    private static String getExsistingListElement(String substring) {
+        return MY_EXITING_LIST_TPL.replace("{FOLDER_NAME}", substring);
+    }
+    /* TEMPLATES METHODS */
+
+
 
     public WebElement waitForTitleElement() {
 
@@ -104,5 +112,31 @@ public class ArticlePageObject extends MainPageObject{
 
     }
 
+    public void addArticleToExistsMyList(String name_of_folder) {
+
+        this.waitForElementAndClick(
+                By.xpath(OPTIONS_BUTTON),
+                "Cannot find button to open article options",
+                5
+        );
+
+        this.waitForElementPresent(
+                By.xpath(OPTIONS_ADD_TO_MY_LIST_BUTTON),
+                "Cannot find option to add article to reading list",
+                5);
+
+        this.waitForElementAndClick(
+                By.xpath(OPTIONS_ADD_TO_MY_LIST_BUTTON),
+                "Cannot find button to add article to reading list",
+                5
+        );
+
+        String existing_list_xpath = getExsistingListElement(name_of_folder);
+        this.waitForElementAndClick(
+                By.xpath(existing_list_xpath),
+                "Cannot find existing folder",
+                5
+        );
+    }
 
 }
