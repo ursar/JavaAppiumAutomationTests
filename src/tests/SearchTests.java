@@ -3,7 +3,6 @@ package tests;
 import lib.CoreTestCase;
 import lib.ui.ArticlePageObject;
 import lib.ui.SearchPageObject;
-import org.junit.Assert;
 import org.junit.Test;
 
 
@@ -21,7 +20,7 @@ public class SearchTests extends CoreTestCase {
         SearchPageObject.typeSearchLine(search_line);
         int result = SearchPageObject.getAmountOfFoundArticles();
 
-        Assert.assertTrue(
+        assertTrue(
                 "Not found search results on the screen",
                 result > 0);
 
