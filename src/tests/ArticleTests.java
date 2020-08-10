@@ -5,7 +5,27 @@ import lib.ui.ArticlePageObject;
 import lib.ui.SearchPageObject;
 import org.junit.Test;
 
+
 public class ArticleTests extends CoreTestCase {
+
+
+    //    Ex6: Тест: assert title
+    @Test
+    public void testCheckArticleTitleWithoutWaiting(){
+
+        String article_title = "Java";
+        String article_title_substring = "Object-oriented programming language";
+
+        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+
+        SearchPageObject.initSearchInput();
+        SearchPageObject.typeSearchLine(article_title);
+        SearchPageObject.clickArticleWithSubstring(article_title_substring);
+
+        ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
+        ArticlePageObject.assertExistsResultOfSearch();
+    }
+
 
     @Test
     public void testCompareArticleTitle() {

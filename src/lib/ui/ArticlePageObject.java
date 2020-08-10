@@ -139,4 +139,9 @@ public class ArticlePageObject extends MainPageObject{
         );
     }
 
+    public void assertExistsResultOfSearch(){
+
+        this.assertElementPresent(By.id(TITLE), "We found more than one title element or didn't find anyone");
+    }
+
 }
