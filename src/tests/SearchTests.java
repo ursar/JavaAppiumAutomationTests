@@ -3,9 +3,34 @@ package tests;
 import lib.CoreTestCase;
 import lib.ui.ArticlePageObject;
 import lib.ui.SearchPageObject;
+import org.junit.Assert;
 import org.junit.Test;
 
+
 public class SearchTests extends CoreTestCase {
+
+    //    Ex3: отмена поиска
+    @Test
+    public void testCancelAndClearSearch () {
+
+        String search_line = "Windows";
+
+        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+
+        SearchPageObject.initSearchInput();
+        SearchPageObject.typeSearchLine(search_line);
+        int result = SearchPageObject.getAmountOfFoundArticles();
+
+        Assert.assertTrue(
+                "Not found search results on the screen",
+                result > 0);
+
+        SearchPageObject.waitForCancelButtonToAppear();
+        SearchPageObject.clickCancelSearch();
+        SearchPageObject.assertThereIsNoResultOfSearch();
+
+    }
+
 
     @Test
     public void testSearch() {
