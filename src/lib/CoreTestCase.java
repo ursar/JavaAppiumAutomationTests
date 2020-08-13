@@ -29,9 +29,9 @@ public class CoreTestCase extends TestCase {
         capabilities.setCapability("appPackage", "org.wikipedia");
         capabilities.setCapability("appActivity", ".main.MainActivity");
 //        Win path
-        capabilities.setCapability("app", "C:\\Users\\Vadim\\IdeaProjects\\JavaAppiumAutomation\\apks\\org.wikipedia.apk");
+//        capabilities.setCapability("app", "C:\\Users\\Vadim\\IdeaProjects\\JavaAppiumAutomation\\apks\\org.wikipedia.apk");
 //        MacOS path
-//        capabilities.setCapability("app", "/Users/admin/IdeaProjects/JavaAppiumAutomation/apks/org.wikipedia.apk");
+        capabilities.setCapability("app", "/Users/admin/Documents/JavaAppiumAutomation/apks/org.wikipedia.apk");
 
         driver = new AndroidDriver(new URL(AppiumURL), capabilities);
         this.rotateScreenPortrait();
