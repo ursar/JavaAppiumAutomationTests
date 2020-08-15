@@ -29,7 +29,6 @@ public class ArticlePageObject extends MainPageObject{
     /* TEMPLATES METHODS */
 
 
-
     public WebElement waitForTitleElement() {
 
         return this.waitForElementPresent(
@@ -114,25 +113,25 @@ public class ArticlePageObject extends MainPageObject{
     public void addArticleToExistsMyList(String name_of_folder) {
 
         this.waitForElementAndClick(
-                By.xpath(OPTIONS_BUTTON),
+                OPTIONS_BUTTON,
                 "Cannot find button to open article options",
                 5
         );
 
         this.waitForElementPresent(
-                By.xpath(OPTIONS_ADD_TO_MY_LIST_BUTTON),
+                OPTIONS_ADD_TO_MY_LIST_BUTTON,
                 "Cannot find option to add article to reading list",
                 5);
 
         this.waitForElementAndClick(
-                By.xpath(OPTIONS_ADD_TO_MY_LIST_BUTTON),
+                OPTIONS_ADD_TO_MY_LIST_BUTTON,
                 "Cannot find button to add article to reading list",
                 5
         );
 
         String existing_list_xpath = getExsistingListElement(name_of_folder);
         this.waitForElementAndClick(
-                By.xpath(existing_list_xpath),
+                existing_list_xpath,
                 "Cannot find existing folder",
                 5
         );
@@ -140,7 +139,7 @@ public class ArticlePageObject extends MainPageObject{
 
     public void assertExistsResultOfSearch(){
 
-        this.assertElementPresent(By.id(TITLE), "We found more than one title element or didn't find anyone");
+        this.assertElementPresent(TITLE, "We found more than one title element or didn't find anyone");
     }
 
 }

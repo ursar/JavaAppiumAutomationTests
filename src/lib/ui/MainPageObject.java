@@ -68,7 +68,7 @@ public class MainPageObject {
 
     public WebElement waitForElementAndClear(String locator, String error_message, long timeoutInSeconds) {
 
-        WebElement element = waitForElementPresent(by, error_message, timeoutInSeconds);
+        WebElement element = waitForElementPresent(locator, error_message, timeoutInSeconds);
         element.clear();
         return element;
     }
@@ -159,12 +159,12 @@ public class MainPageObject {
 
     }
 
-    public void assertElementPresent(By by, String error_message) {
+    public void assertElementPresent(String locator, String error_message) {
 
-        int amount_of_elements = getAmountOfElements(by);
+        int amount_of_elements = getAmountOfElements(locator);
 
         if (amount_of_elements == 0) {
-            String default_message = "An element " + by.toString() + " supposed to be present";
+            String default_message = "An element " + locator + " supposed to be present";
             throw new AssertionError(default_message + " " + error_message);
         }
     }
