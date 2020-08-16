@@ -1,11 +1,18 @@
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.net.URL;
+import java.util.List;
+
 
 public class FirstTest {
 
@@ -39,8 +46,174 @@ public class FirstTest {
 
 
     @Test
-    public void firstTest()
-    {
-        System.out.println("First test run");
+    public void testSearchInputPlaceholderText() {
+
+        waitForElementPresent(
+                By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
+                "Cannot find Search Wikipedia input"
+        );
+
+        assertElementHasText(
+                By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
+                "Search Wikipedia",
+                "The input field does not contain the search text"
+        );
+    }
+
+
+    @Test
+    public void testCancelAndClearSearch () {
+
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
+                "Cannot find Search Wikipedia input",
+                5
+        );
+
+        waitForElementAndSendKeys(
+                By.xpath("//*[contains(@text, 'Search…')]"),
+                "Windows",
+                "Cannot find search input",
+                5
+        );
+        
+        int result = getSearchArticleCount(
+                By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_title']"),
+                "There is no search results on the screen",
+                10
+        );
+
+        Assert.assertTrue("Not found search results on the screen", result > 0);
+
+        waitForElementAndClear(
+                By.xpath("//*[@resource-id='org.wikipedia:id/search_src_text']"),
+                "Cannot find search input",
+                5
+        );
+
+        waitForElementNotPresent(
+                By.xpath("//*[@resource-id='org.wikipedia:id/fragment_search_results']"),
+                "Search results are displayed on the screen",
+                5
+        );
+
+    }
+
+    @Test
+    public void testCheckSearchResultContainsRequestedString(){
+
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
+                "Cannot find Search Wikipedia input",
+                5
+        );
+
+        waitForElementAndSendKeys(
+                By.xpath("//*[@resource-id='org.wikipedia:id/search_src_text']"),
+                "JAVA",
+                "There is no search field on the screen",
+                5
+        );
+
+        List<WebElement> searchResults = waitForListOfElementsPresentByXPath(
+                By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_title']"),
+                "There is no search results on the screen",
+                5
+        );
+
+        for (WebElement element : searchResults){
+            Assert.assertTrue("Result does not contains search world", element.getText().toLowerCase().contains("java"));
+        }
+    }
+
+
+    private WebElement waitForElementPresent(By by, String errorMessage, long timeoutInSeconds) {
+
+        WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
+        wait.withMessage(errorMessage + "\n");
+        return wait.until(
+                ExpectedConditions.presenceOfElementLocated(by)
+        );
+    }
+
+
+    private WebElement waitForElementPresent(By by, String errorMessage) {
+
+        return waitForElementPresent(by, errorMessage, 5);
+    }
+
+
+    private WebElement waitForElementAndClick(By by, String errorMessage, long timeoutInSeconds) {
+
+        WebElement element = waitForElementPresent(by, errorMessage, timeoutInSeconds);
+        element.click();
+        return element;
+    }
+
+
+    private WebElement waitForElementAndSendKeys(By by, String value, String errorMessage, long timeoutInSeconds) {
+
+        WebElement element = waitForElementPresent(by, errorMessage, timeoutInSeconds);
+        element.sendKeys(value);
+        return element;
+    }
+
+
+    private boolean waitForElementNotPresent(By by, String errorMessage, long timeoutInSeconds) {
+
+        WebDriverWait wait = new WebDriverWait(driver, 5);
+        wait.withMessage(errorMessage + "\n");
+        return wait.until(
+                ExpectedConditions.invisibilityOfElementLocated(by)
+        );
+    }
+
+
+    private WebElement waitForElementAndClear(By by, String errorMessage, long timeoutInSeconds) {
+
+        WebElement element = waitForElementPresent(by, errorMessage, timeoutInSeconds);
+        element.clear();
+        return element;
+    }
+
+
+    private void assertElementHasText(By by, String expectedText, String errorMessage) {
+
+        WebElement element = waitForElementPresent(by, errorMessage);
+        String elementText = element.getAttribute("text");
+        Assert.assertEquals(
+                errorMessage,
+                expectedText,
+                elementText
+        );
+    }
+
+
+    private int getSearchArticleCount(By by, String errorMessage, long timeoutInSeconds) {
+
+        List<WebElement> searchResults = waitForListOfElementsPresentByXPath(by, errorMessage, timeoutInSeconds);
+        return searchResults.size();
+    }
+
+
+    private WebElement getSearchArticleCount(By by, String errorMessage) {
+
+        return waitForElementPresent(by, errorMessage, 5);
+    }
+
+
+    private List<WebElement> waitForListOfElementsPresentByXPath(By by, String errorMessage, long timeoutInSeconds){
+        WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
+        wait.withMessage(errorMessage + "\n");
+        return wait.until(
+                ExpectedConditions.presenceOfAllElementsLocatedBy(by)
+        );
+    }
+
+
+    private WebElement waitForListOfElementsPresentByXPath(By by, String errorMessage) {
+
+        return waitForElementPresent(by, errorMessage, 5);
     }
 }
+
