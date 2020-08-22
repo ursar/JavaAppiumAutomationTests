@@ -70,6 +70,7 @@ public class Platform {
         capabilities.setCapability("platformName", "iOS");
         capabilities.setCapability("deviceName", "iPhone 11");
         capabilities.setCapability("platformVersion", "13.4");
+        capabilities.setCapability("connect hardware keyboard", "false");
         capabilities.setCapability("app", "/Users/admin/Documents/JavaAppiumAutomation/apks/Wikipedia.app.zip");
         return capabilities;
 
