@@ -14,7 +14,8 @@ abstract public class ArticlePageObject extends MainPageObject {
             ADD_TO_MY_LIST_OVERLAY,
             MY_LIST_NAME_INPUT,
             MY_LIST_OK_BUTTON,
-            CLOSE_ARTICLE_BUTTON;
+            CLOSE_ARTICLE_BUTTON,
+            CLOSE_ALERT_BUTTON;
 
 
     public ArticlePageObject(AppiumDriver driver) {
@@ -31,7 +32,7 @@ abstract public class ArticlePageObject extends MainPageObject {
         );
     }
 
-    public String  getArticleTitle() {
+    public String getArticleTitle() {
 
         WebElement title_element = waitForTitleElement();
         if(Platform.getInstance().isAndroid()) {
@@ -105,7 +106,24 @@ abstract public class ArticlePageObject extends MainPageObject {
                 "Cannot press OK button",
                 5
         );
+    }
 
+    public void addArticlesToMySaved() {
+
+        this.waitForElementAndClick(
+                OPTIONS_ADD_TO_MY_LIST_BUTTON,
+                "Cannot find option to add article to reading list",
+                5
+        );
+    }
+
+    public void closeSyncDialog() {
+
+        this.waitForElementAndClick(
+                CLOSE_ALERT_BUTTON,
+                "Cannot close sync dialog",
+                5
+        );
     }
 
     public void closeArticle() {
@@ -115,8 +133,5 @@ abstract public class ArticlePageObject extends MainPageObject {
                 "Cannot close article, cannot find X link",
                 5
         );
-
     }
-
-
 }

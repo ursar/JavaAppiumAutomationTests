@@ -68,9 +68,10 @@ public class Platform {
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("platformName", "iOS");
-        capabilities.setCapability("deviceName", "iPhone 11");
+        capabilities.setCapability("deviceName", "iPhone 8");
         capabilities.setCapability("platformVersion", "13.4");
         capabilities.setCapability("connect hardware keyboard", "false");
+//        capabilities.setCapability("noReset", "true");
         capabilities.setCapability("app", "/Users/admin/Documents/JavaAppiumAutomation/apks/Wikipedia.app.zip");
         return capabilities;
 
