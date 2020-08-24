@@ -77,7 +77,6 @@ public class MainPageObject {
         return element;
     }
 
-
     public void swipeUP(long timeOfSwipe) {
         TouchAction action = new TouchAction(driver);
         Dimension size = driver.manage().window().getSize();
@@ -112,7 +111,6 @@ public class MainPageObject {
             swipeUPQuick();
             ++already_swiped;
         }
-
     }
 
     public void swipeUpTillElementAppear(String locator, String error_message, int max_swipes) {
@@ -157,7 +155,6 @@ public class MainPageObject {
                 .release()
                 .perform();
     }
-
 
     public void swipeElementToLeft(String locator, String error_message) {
 

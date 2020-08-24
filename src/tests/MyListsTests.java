@@ -50,16 +50,14 @@ public class MyListsTests extends CoreTestCase {
         MyListsPageObject.swipeByArticleToDelete(article_title);
     }
 
-
-    //    Ex5: Тест: сохранение двух статей
+    //    Ex11: Рефакторинг сохранения двух статей
     @Test
-    public void testSaveTwoArticleToMyList() {
+    public void testSaveTwoArticleToMyListOneDelete() {
 
         String first_article_title = "Java";
         String first_article_title_full = "Java (programming language)";
         String second_article_title = "C#";
         String second_article_title_full = "C Sharp (programming language)";
-        String name_of_folder = "Learning programming";
 
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
 
@@ -70,44 +68,59 @@ public class MyListsTests extends CoreTestCase {
         ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
         ArticlePageObject.waitForTitleElement();
 
-        ArticlePageObject.addArticleToMyList(name_of_folder);
+        if(Platform.getInstance().isAndroid()) {
+            ArticlePageObject.addArticleToMyList(NAME_OF_FOLDER);
+        } else {
+            ArticlePageObject.addArticlesToMySaved();
+            ArticlePageObject.closeSyncDialog();
+        }
+
         ArticlePageObject.closeArticle();
 
         SearchPageObject.initSearchInput();
+        SearchPageObject.clearSearchInput();
+
         SearchPageObject.typeSearchLine(second_article_title);
         SearchPageObject.clickArticleWithSubstring(second_article_title_full);
 
-        ArticlePageObject.addArticleToExistsMyList(name_of_folder);
+        if(Platform.getInstance().isAndroid()) {
+            ArticlePageObject.addArticleToExistsMyList(NAME_OF_FOLDER);
+        } else {
+            ArticlePageObject.addArticlesToMySaved();
+        }
+
         ArticlePageObject.closeArticle();
 
         NavigationUI NavigationUI = NavigationUIFactory.get(driver);
         NavigationUI.clickMyList();
 
         MyListsPageObject MyListsPageObject = MyListsPageObjectFactory.get(driver);
-        MyListsPageObject.openFolderByName(name_of_folder);
+
+        if(Platform.getInstance().isAndroid()) {
+            MyListsPageObject.openFolderByName(NAME_OF_FOLDER);
+        }
+
         MyListsPageObject.swipeByArticleToDelete(first_article_title_full);
-        MyListsPageObject.waitArticleToDisappearByTitle(first_article_title_full);
-        MyListsPageObject.waitArticleToAppearByTitle(second_article_title_full);
 
-        MyListsPageObject.openArticleInMyList(second_article_title_full);
-        String article_title = ArticlePageObject.getArticleTitle();
+        SearchPageObject.waitForSearchResult(second_article_title_full);
 
-        assertEquals(
-                "We see unexpected title!",
-                second_article_title_full,
-                article_title
-        );
+        if(Platform.getInstance().isAndroid()) {
+            MyListsPageObject.openArticleInMyList(second_article_title_full);
+            String article_title = ArticlePageObject.getArticleTitle();
 
+            assertEquals(
+                    "We see unexpected title!",
+                    second_article_title_full,
+                    article_title
+            );
+        } else {
+            String article_title = SearchPageObject.getAttributeNameFromArticleInMyList(second_article_title_full);
+            assertEquals(
+                    "We see unexpected title!",
+                    second_article_title_full,
+                    article_title
+            );
+        }
     }
 
-//    @Test
-//    public void testSwipeDelete() {
-//
-//        NavigationUI NavigationUI = NavigationUIFactory.get(driver);
-//        NavigationUI.clickMyList();//
-//
-//        MyListsPageObject MyListsPageObject = MyListsPageObjectFactory.get(driver);
-//
-//        MyListsPageObject.swipeByArticleToDelete("Java (programming language)");
-//    }
 }

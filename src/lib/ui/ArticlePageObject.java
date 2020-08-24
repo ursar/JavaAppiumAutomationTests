@@ -48,7 +48,6 @@ abstract public class ArticlePageObject extends MainPageObject {
         } else {
             return title_element.getAttribute("name");
         }
-
     }
 
     public void swipeToFooter() {
@@ -65,10 +64,7 @@ abstract public class ArticlePageObject extends MainPageObject {
                     "Cannot find the end of the article",
                     40
             );
-
         }
-
-
     }
 
     public void addArticleToMyList(String name_of_folder) {
@@ -141,7 +137,6 @@ abstract public class ArticlePageObject extends MainPageObject {
                 "Cannot close article, cannot find X link",
                 5
         );
-
     }
 
     public void addArticleToExistsMyList(String name_of_folder) {

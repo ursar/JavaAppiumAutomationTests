@@ -109,7 +109,6 @@ abstract public class SearchPageObject extends MainPageObject{
                 15
         );
         return this.getAmountOfElements(SEARCH_RESULT_ELEMENT);
-
     }
 
     public void waitForEmptyResultsLabel() {
@@ -119,7 +118,6 @@ abstract public class SearchPageObject extends MainPageObject{
                "Cannot find empty result element",
                15
        );
-
     }
 
     public void assertThereIsNoResultOfSearch() {
@@ -136,6 +134,26 @@ abstract public class SearchPageObject extends MainPageObject{
         this.waitForElementPresent(search_result_xpath,
                 "Cannot find search result with title \"" + title + "\" and description \"" + description + "\"",
                 10);
+    }
+
+    public void clearSearchInput() {
+
+        this.waitForElementAndClear(
+                SEARCH_INIT_ELEMENT,
+                "Cannot clear search input",
+                5);
+    }
+
+    public String getAttributeNameFromArticleInMyList(String substring) {
+
+        String xpath_locator = getResultSearchElement(substring);
+        String name_of_cell = this.waitForElementAndGetAttribute(
+                xpath_locator,
+                "name",
+                "Cannot find article or get name attribute",
+                5
+        );
+        return name_of_cell;
     }
 
 }
