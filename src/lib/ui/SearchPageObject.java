@@ -11,7 +11,7 @@ abstract public class SearchPageObject extends MainPageObject{
             SEARCH_RESULT_BY_SUBSTRING_TPL,
             SEARCH_RESULT_ELEMENT,
             SEARCH_EMPTY_RESULT_ELEMENT,
-            SEARCH_RESULT_BY_TITLE_AND_DESCRIPTION_TPL = "xpath://*[@resource-id = 'org.wikipedia:id/page_list_item_container']//*[@resource-id = 'org.wikipedia:id/page_list_item_title' and @text = '{TITLE}']//following-sibling::*[@resource-id = 'org.wikipedia:id/page_list_item_description' and @text = '{DESCRIPTION}']";
+            SEARCH_RESULT_BY_TITLE_AND_DESCRIPTION_TPL;
 
 
     public SearchPageObject(AppiumDriver driver){
@@ -118,7 +118,6 @@ abstract public class SearchPageObject extends MainPageObject{
                SEARCH_EMPTY_RESULT_ELEMENT,
                "Cannot find empty result element",
                15
-
        );
 
     }

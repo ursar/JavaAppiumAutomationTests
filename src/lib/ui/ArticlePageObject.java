@@ -16,9 +16,7 @@ abstract public class ArticlePageObject extends MainPageObject {
             MY_LIST_OK_BUTTON,
             CLOSE_ARTICLE_BUTTON,
             CLOSE_ALERT_BUTTON,
-            MY_EXITING_LIST_TPL = "xpath://android.widget.TextView[@text = '{FOLDER_NAME}']";
-
-
+            MY_EXITING_LIST_TPL;
 
 
     public ArticlePageObject(AppiumDriver driver) {

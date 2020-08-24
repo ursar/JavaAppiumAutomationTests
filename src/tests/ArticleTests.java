@@ -18,13 +18,13 @@ public class ArticleTests extends CoreTestCase {
         String article_title = "Java";
         String article_title_substring = "Object-oriented programming language";
 
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
 
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine(article_title);
         SearchPageObject.clickArticleWithSubstring(article_title_substring);
 
-        ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
+        ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
         ArticlePageObject.assertExistsResultOfSearch();
     }
 
@@ -61,5 +61,18 @@ public class ArticleTests extends CoreTestCase {
         ArticlePageObject.waitForTitleElement();
 
         SearchPageObject.swipeUP(2000);
+    }
+
+    @Test
+    public void testSwipeArticleToFooter() {
+
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
+        SearchPageObject.initSearchInput();
+        SearchPageObject.typeSearchLine("Java");
+        SearchPageObject.clickArticleWithSubstring("Object-oriented programming language");
+
+        ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
+        ArticlePageObject.waitForTitleElement();
+        ArticlePageObject.swipeToFooter();
     }
 }

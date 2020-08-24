@@ -61,13 +61,13 @@ public class MyListsTests extends CoreTestCase {
         String second_article_title_full = "C Sharp (programming language)";
         String name_of_folder = "Learning programming";
 
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
 
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine(first_article_title);
         SearchPageObject.clickArticleWithSubstring(first_article_title_full);
 
-        ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
+        ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
         ArticlePageObject.waitForTitleElement();
 
         ArticlePageObject.addArticleToMyList(name_of_folder);
@@ -80,10 +80,10 @@ public class MyListsTests extends CoreTestCase {
         ArticlePageObject.addArticleToExistsMyList(name_of_folder);
         ArticlePageObject.closeArticle();
 
-        NavigationUI NavigationUI = new NavigationUI(driver);
+        NavigationUI NavigationUI = NavigationUIFactory.get(driver);
         NavigationUI.clickMyList();
 
-        MyListsPageObject MyListsPageObject = new MyListsPageObject(driver);
+        MyListsPageObject MyListsPageObject = MyListsPageObjectFactory.get(driver);
         MyListsPageObject.openFolderByName(name_of_folder);
         MyListsPageObject.swipeByArticleToDelete(first_article_title_full);
         MyListsPageObject.waitArticleToDisappearByTitle(first_article_title_full);
@@ -99,8 +99,6 @@ public class MyListsTests extends CoreTestCase {
         );
 
     }
-
-
 
 //    @Test
 //    public void testSwipeDelete() {
