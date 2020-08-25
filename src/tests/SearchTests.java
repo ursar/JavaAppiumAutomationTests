@@ -9,7 +9,7 @@ import org.junit.Test;
 public class SearchTests extends CoreTestCase {
 
 
-    // Ex9*: Рефакторинг темплейта
+    // Ex12*: Рефакторинг теста под iOS на поиск и верификацию трех результатов выдачи поиска.
     @Test
     public void testCheckSearchResultByTitleAndSubtitle(){
 
