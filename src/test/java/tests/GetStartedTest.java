@@ -12,8 +12,6 @@ public class GetStartedTest extends CoreTestCase {
 
         if (Platform.getInstance().isAndroid()) {
             return;
-        } else if (Platform.getInstance().isIOS()) {
-            return;
         }
 
         WelcomePageObject WelcomePage = new WelcomePageObject(driver);
