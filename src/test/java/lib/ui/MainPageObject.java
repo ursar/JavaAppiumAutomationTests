@@ -27,6 +27,7 @@ public class MainPageObject {
         this.driver = driver;
     }
 
+
     public WebElement waitForElementPresent(String locator, String error_message, long timeoutInSeconds) {
 
         By by = this.getLocatorByString(locator);
@@ -44,12 +45,14 @@ public class MainPageObject {
 
     }
 
+
     public WebElement waitForElementAndClick(String locator, String error_message, long timeoutInSeconds) {
 
         WebElement element = waitForElementPresent(locator, error_message, timeoutInSeconds);
         element.click();
         return element;
     }
+
 
     public WebElement waitForElementAndSendKeys(String locator, String value, String error_message, long timeoutInSeconds) {
 
@@ -72,6 +75,7 @@ public class MainPageObject {
                 ExpectedConditions.invisibilityOfElementLocated(by)
         );
     }
+
 
     public WebElement waitForElementAndClear(String locator, String error_message, long timeoutInSeconds) {
 

@@ -1,6 +1,7 @@
 package lib.ui;
 
 import io.appium.java_client.AppiumDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class WelcomePageObject extends MainPageObject{
 
@@ -14,7 +15,7 @@ public class WelcomePageObject extends MainPageObject{
             SKIP = "xpath://XCUIElementTypeButton[@name='Skip']";
 
 
-    public WelcomePageObject(AppiumDriver driver){
+    public WelcomePageObject(RemoteWebDriver driver){
 
         super(driver);
     }
@@ -74,9 +75,5 @@ public class WelcomePageObject extends MainPageObject{
                 "Cannot find and click 'Skip Button'",
                 5);
     }
-
-
-
-
 
 }
