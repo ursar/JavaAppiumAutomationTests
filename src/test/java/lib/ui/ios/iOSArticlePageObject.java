@@ -1,6 +1,5 @@
 package lib.ui.ios;
 
-import io.appium.java_client.AppiumDriver;
 import lib.ui.ArticlePageObject;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -12,7 +11,6 @@ public class iOSArticlePageObject extends ArticlePageObject {
         OPTIONS_ADD_TO_MY_LIST_BUTTON = "id:Save for later";
         CLOSE_ARTICLE_BUTTON = "id:Back";
         CLOSE_ALERT_BUTTON = "id:places auth close";
-
     }
 
     public iOSArticlePageObject(RemoteWebDriver driver) {
