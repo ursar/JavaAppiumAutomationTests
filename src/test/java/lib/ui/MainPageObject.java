@@ -27,7 +27,6 @@ public class MainPageObject {
         this.driver = driver;
     }
 
-
     public WebElement waitForElementPresent(String locator, String error_message, long timeoutInSeconds) {
 
         By by = this.getLocatorByString(locator);
@@ -38,13 +37,11 @@ public class MainPageObject {
         );
     }
 
-
     public WebElement waitForElementPresent(String locator, String error_message) {
 
         return waitForElementPresent(locator, error_message, 5);
 
     }
-
 
     public WebElement waitForElementAndClick(String locator, String error_message, long timeoutInSeconds) {
 
@@ -52,7 +49,6 @@ public class MainPageObject {
         element.click();
         return element;
     }
-
 
     public WebElement waitForElementAndSendKeys(String locator, String value, String error_message, long timeoutInSeconds) {
 
@@ -65,7 +61,6 @@ public class MainPageObject {
         return element;
     }
 
-
     public boolean waitForElementNotPresent(String locator, String error_message, long timeoutInSeconds) {
 
         By by = this.getLocatorByString(locator);
@@ -76,14 +71,12 @@ public class MainPageObject {
         );
     }
 
-
     public WebElement waitForElementAndClear(String locator, String error_message, long timeoutInSeconds) {
 
         WebElement element = waitForElementPresent(locator, error_message, timeoutInSeconds);
         element.clear();
         return element;
     }
-
 
     public void swipeUP(long timeOfSwipe) {
 
@@ -105,11 +98,9 @@ public class MainPageObject {
         }
     }
 
-
     public void swipeUPQuick() {
         swipeUP(200);
     }
-
 
     public void swipeUPToFindElement(String locator, String error_message, int max_swipes) {
 
@@ -126,9 +117,7 @@ public class MainPageObject {
             swipeUPQuick();
             ++already_swiped;
         }
-
     }
-
 
     public void swipeUpTillElementAppear(String locator, String error_message, int max_swipes) {
 
@@ -142,7 +131,6 @@ public class MainPageObject {
         }
     }
 
-
     public boolean isElementLocatedOnTheScreen(String locator) {
 
          int element_location_by_y = this.waitForElementPresent(
@@ -153,7 +141,6 @@ public class MainPageObject {
          int screen_size_by_y = driver.manage().window().getSize().getHeight();
          return element_location_by_y < screen_size_by_y;
     }
-
 
     public void clickElementToTheRightUpperCorner(String locator, String error_message) {
 
@@ -177,7 +164,6 @@ public class MainPageObject {
             System.out.println("Method clickElementToTheRightUpperCorner() does nothing for platform " + Platform.getInstance().getPlatformVar());
         }
     }
-
 
     public void swipeElementToLeft(String locator, String error_message) {
 
@@ -244,5 +230,4 @@ public class MainPageObject {
             throw new IllegalArgumentException("Cannot get type of locator. locator: " + locator);
         }
     }
-
 }
