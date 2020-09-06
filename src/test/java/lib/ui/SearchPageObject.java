@@ -10,7 +10,8 @@ abstract public class SearchPageObject extends MainPageObject{
             SEARCH_CANCEL_BUTTON,
             SEARCH_RESULT_BY_SUBSTRING_TPL,
             SEARCH_RESULT_ELEMENT,
-            SEARCH_EMPTY_RESULT_ELEMENT;
+            SEARCH_EMPTY_RESULT_ELEMENT,
+            SEARCH_INPUT_BY_TITLE_TPL;
 
 
     public SearchPageObject(RemoteWebDriver driver){
@@ -21,6 +22,11 @@ abstract public class SearchPageObject extends MainPageObject{
     private static String getResultSearchElement(String substring) {
 
         return SEARCH_RESULT_BY_SUBSTRING_TPL.replace("{SUBSTRING}", substring);
+    }
+
+    private static String getResultSearchElementByTitle(String title)
+    {
+        return SEARCH_INPUT_BY_TITLE_TPL.replace("{TITLE}", title);
     }
     /* TEMPLATES METHODS */
 
@@ -152,6 +158,15 @@ abstract public class SearchPageObject extends MainPageObject{
                 5
         );
         return name_of_cell;
+    }
+
+
+    public void clickByItemWithTitle(String title) {
+        String search_result_xpath = getResultSearchElementByTitle(title);
+        this.waitForElementAndClick(
+                search_result_xpath,
+                "Cannot find and click search result with title" + title,
+                10);
     }
 
 }

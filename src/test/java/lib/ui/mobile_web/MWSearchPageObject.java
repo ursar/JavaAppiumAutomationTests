@@ -12,6 +12,7 @@ public class MWSearchPageObject extends SearchPageObject {
         SEARCH_RESULT_BY_SUBSTRING_TPL ="xpath://div[contains(@class,'wikidata-description')][contains(text(),'{SUBSTRING}')]";
         SEARCH_RESULT_ELEMENT ="css:ul.page-list>li.page-summary";
         SEARCH_EMPTY_RESULT_ELEMENT ="css:p.without-results";
+        SEARCH_INPUT_BY_TITLE_TPL = "xpath://ul[contains(@class,'watchlist')]//h3[contains(text(),'{TITLE}')]";
     }
 
     public MWSearchPageObject(RemoteWebDriver driver) {
