@@ -38,6 +38,7 @@ abstract public class SearchPageObject extends MainPageObject{
         );
     }
 
+
     public void waitForCancelButtonToAppear() {
 
         this.waitForElementPresent(
@@ -47,6 +48,7 @@ abstract public class SearchPageObject extends MainPageObject{
         );
     }
 
+
     public void waitForCancelButtonToDisappear() {
 
         this.waitForElementNotPresent(
@@ -55,6 +57,7 @@ abstract public class SearchPageObject extends MainPageObject{
                 5
         );
     }
+
 
     public void clickCancelSearch() {
 
@@ -76,6 +79,7 @@ abstract public class SearchPageObject extends MainPageObject{
         );
     }
 
+
     public void waitForSearchResult(String substring ) {
 
         String search_result_xpath = getResultSearchElement(substring);
@@ -96,6 +100,7 @@ abstract public class SearchPageObject extends MainPageObject{
         );
     }
 
+
     public int getAmountOfFoundArticles() {
 
         this.waitForElementPresent(
@@ -106,6 +111,7 @@ abstract public class SearchPageObject extends MainPageObject{
         return this.getAmountOfElements(SEARCH_RESULT_ELEMENT);
 
     }
+
 
     public void waitForEmptyResultsLabel() {
 
@@ -118,12 +124,34 @@ abstract public class SearchPageObject extends MainPageObject{
 
     }
 
+
     public void assertThereIsNoResultOfSearch() {
 
         this.assertElementNotPresent(
                 SEARCH_RESULT_ELEMENT,
                 "We supposed not to find any results"
         );
+    }
+
+
+    public void clearSearchInput() {
+
+        this.waitForElementAndClear(
+                SEARCH_INIT_ELEMENT,
+                "Cannot clear search input",
+                5);
+    }
+
+    public String getAttributeNameFromArticleInMyList(String substring) {
+
+        String xpath_locator = getResultSearchElement(substring);
+        String name_of_cell = this.waitForElementAndGetAttribute(
+                xpath_locator,
+                "name",
+                "Cannot find article or get name attribute",
+                5
+        );
+        return name_of_cell;
     }
 
 }

@@ -16,13 +16,20 @@ abstract public class ArticlePageObject extends MainPageObject {
             MY_LIST_NAME_INPUT,
             MY_LIST_OK_BUTTON,
             CLOSE_ARTICLE_BUTTON,
-            CLOSE_ALERT_BUTTON;
+            CLOSE_ALERT_BUTTON,
+            MY_EXITING_LIST_TPL;
 
 
     public ArticlePageObject(RemoteWebDriver driver) {
 
         super(driver);
     }
+
+    /* TEMPLATES METHODS */
+    private static String getExsistingListElement(String substring) {
+        return MY_EXITING_LIST_TPL.replace("{FOLDER_NAME}", substring);
+    }
+    /* TEMPLATES METHODS */
 
     public WebElement waitForTitleElement() {
 
@@ -167,6 +174,34 @@ abstract public class ArticlePageObject extends MainPageObject {
         } else {
             System.out.println("Method closeArticle() do nothing for platform: " + Platform.getInstance().getPlatformVar());
         }
+    }
+
+
+    public void addArticleToExistsMyList(String name_of_folder) {
+
+        this.waitForElementAndClick(
+                OPTIONS_BUTTON,
+                "Cannot find button to open article options",
+                5
+        );
+
+        this.waitForElementPresent(
+                OPTIONS_ADD_TO_MY_LIST_BUTTON,
+                "Cannot find option to add article to reading list",
+                5);
+
+        this.waitForElementAndClick(
+                OPTIONS_ADD_TO_MY_LIST_BUTTON,
+                "Cannot find button to add article to reading list",
+                5
+        );
+
+        String existing_list_xpath = getExsistingListElement(name_of_folder);
+        this.waitForElementAndClick(
+                existing_list_xpath,
+                "Cannot find existing folder",
+                5
+        );
     }
 
 }
