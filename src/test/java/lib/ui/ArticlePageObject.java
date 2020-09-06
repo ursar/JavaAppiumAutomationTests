@@ -1,6 +1,5 @@
 package lib.ui;
 
-import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.WebElement;
 import lib.Platform;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -12,6 +11,7 @@ abstract public class ArticlePageObject extends MainPageObject {
             FOOTER_ELEMENT,
             OPTIONS_BUTTON,
             OPTIONS_ADD_TO_MY_LIST_BUTTON,
+            OPTIONS_REMOVE_FROM_MY_LIST_BUTTON,
             ADD_TO_MY_LIST_OVERLAY,
             MY_LIST_NAME_INPUT,
             MY_LIST_OK_BUTTON,
@@ -68,7 +68,6 @@ abstract public class ArticlePageObject extends MainPageObject {
             );
         }
 
-
     }
 
     public void addArticleToMyList(String name_of_folder) {
@@ -116,7 +115,12 @@ abstract public class ArticlePageObject extends MainPageObject {
         );
     }
 
+
     public void addArticlesToMySaved() {
+
+        if(Platform.getInstance().isMW()) {
+            this.removeArticleFromSavedIfItAdded();
+        }
 
         this.waitForElementAndClick(
                 OPTIONS_ADD_TO_MY_LIST_BUTTON,
@@ -124,6 +128,24 @@ abstract public class ArticlePageObject extends MainPageObject {
                 5
         );
     }
+
+
+    public void removeArticleFromSavedIfItAdded() {
+
+        if (this.isElementPresent(OPTIONS_REMOVE_FROM_MY_LIST_BUTTON)) {
+            this.waitForElementAndClick(
+                    OPTIONS_REMOVE_FROM_MY_LIST_BUTTON,
+                    "Cannot click button to remove an article from saved",
+                    2
+            );
+            this.waitForElementPresent(
+                    OPTIONS_ADD_TO_MY_LIST_BUTTON,
+                    "Cannot find button to add an article to saved list after removing it from this list before",
+                    5
+            );
+        }
+    }
+
 
     public void closeSyncDialog() {
 
@@ -134,12 +156,17 @@ abstract public class ArticlePageObject extends MainPageObject {
         );
     }
 
-    public void closeArticle() {
 
-        this.waitForElementAndClick(
-                CLOSE_ARTICLE_BUTTON,
-                "Cannot close article, cannot find X link",
-                5
-        );
+    public void closeArticle() {
+        if (Platform.getInstance().isIOS() || Platform.getInstance().isAndroid()) {
+            this.waitForElementAndClick(
+                    CLOSE_ARTICLE_BUTTON,
+                    "Cannot close article, cannot find X link",
+                    5
+            );
+        } else {
+            System.out.println("Method closeArticle() do nothing for platform: " + Platform.getInstance().getPlatformVar());
+        }
     }
+
 }
