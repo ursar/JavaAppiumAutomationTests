@@ -50,6 +50,7 @@ public class MyListsTests extends CoreTestCase {
                     article_title,
                     ArticlePageObject.getArticleTitle()
             );
+            ArticlePageObject.addArticlesToMySaved();
         }
 
         ArticlePageObject.closeArticle();

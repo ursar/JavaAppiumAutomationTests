@@ -11,7 +11,8 @@ abstract public class SearchPageObject extends MainPageObject{
             SEARCH_RESULT_BY_SUBSTRING_TPL,
             SEARCH_RESULT_ELEMENT,
             SEARCH_EMPTY_RESULT_ELEMENT,
-            SEARCH_INPUT_BY_TITLE_TPL;
+            SEARCH_INPUT_BY_TITLE_TPL,
+            SEARCH_RESULT_BY_TITLE_AND_DESCRIPTION_TPL;
 
 
     public SearchPageObject(RemoteWebDriver driver){
@@ -27,6 +28,10 @@ abstract public class SearchPageObject extends MainPageObject{
     private static String getResultSearchElementByTitle(String title)
     {
         return SEARCH_INPUT_BY_TITLE_TPL.replace("{TITLE}", title);
+    }
+
+    private static String getResultSearchElementByTitleAndDescription(String title, String description) {
+        return SEARCH_RESULT_BY_TITLE_AND_DESCRIPTION_TPL.replace("{TITLE}", title).replace("{DESCRIPTION}", description);
     }
     /* TEMPLATES METHODS */
 
@@ -166,6 +171,15 @@ abstract public class SearchPageObject extends MainPageObject{
         this.waitForElementAndClick(
                 search_result_xpath,
                 "Cannot find and click search result with title" + title,
+                10);
+    }
+
+
+    public void waitForElementByTitleAndDescription(String title, String description){
+
+        String search_result_xpath = getResultSearchElementByTitleAndDescription(title, description);
+        this.waitForElementPresent(search_result_xpath,
+                "Cannot find search result with title \"" + title + "\" and description \"" + description + "\"",
                 10);
     }
 

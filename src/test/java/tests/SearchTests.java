@@ -9,6 +9,30 @@ import org.junit.Test;
 
 public class SearchTests extends CoreTestCase {
 
+
+    // Ex18*: Рефакторинг теста под MW на поиск и верификацию трех результатов выдачи поиска.
+    @Test
+    public void testCheckSearchResultByTitleAndSubtitle(){
+
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
+
+        String search_line = "C++";
+        String expected_title1 = "C++";
+        String expected_description1 = "General-purpose programming language";
+        String expected_title2 = "C++11";
+        String expected_description2 = "2011 edition of the C++ programming language standard";
+        String expected_title3 = "C++Builder";
+        String expected_description3 = "Integrated development environment";
+
+        SearchPageObject.initSearchInput();
+        SearchPageObject.typeSearchLine(search_line);
+
+        SearchPageObject.waitForElementByTitleAndDescription(expected_title1, expected_description1);
+        SearchPageObject.waitForElementByTitleAndDescription(expected_title2, expected_description2);
+        SearchPageObject.waitForElementByTitleAndDescription(expected_title3, expected_description3);
+    }
+
+
     @Test
     public void testSearch() {
 
